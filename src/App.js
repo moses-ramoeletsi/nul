@@ -1,6 +1,7 @@
 import React from 'react';
 import { Menu, X, Mail, MapPin, Clock, ChevronRight, ArrowRight } from 'lucide-react';
-
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import AdminPanel from './Admin'; 
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -91,6 +92,8 @@ const Hero = () => (
     </div>
   </div>
 );
+
+
 
 // About Component with enhanced styling
 const About = () => (
@@ -255,7 +258,7 @@ const Footer = () => (
   </footer>
 );
 
-const App = () => {
+const MainContent  = () => {
   return (
     <div className="min-h-screen">
       <Navigation />
@@ -269,5 +272,38 @@ const App = () => {
     </div>
   );
 };
+const NotFound = () => (
+  <div className="min-h-screen flex items-center justify-center bg-gray-50">
+    <div className="text-center">
+      <h1 className="text-4xl font-bold text-blue-900 mb-4">404</h1>
+      <p className="text-xl text-gray-600 mb-8">Page not found</p>
+      <a 
+        href="/" 
+        className="text-blue-600 hover:text-blue-800 font-medium"
+      >
+        Return to homepage
+      </a>
+    </div>
+  </div>
+);
+
+const App = () => {
+  return (
+    <BrowserRouter>
+      <Routes>
+        {/* Main website route */}
+        <Route path="/" element={<MainContent />} />
+        
+        {/* Admin routes */}
+        <Route path="/admin/*" element={<AdminPanel />} />
+        <Route path="/admin-panel/*" element={<AdminPanel />} />
+        <Route path="/dashboard/*" element={<AdminPanel />} />
+        
+        {/* Catch-all route for 404 */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
 
 export default App;
